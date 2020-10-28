@@ -13,7 +13,7 @@
 import inspect
 
 from django.db.models import base
-from django.utils.six import with_metaclass
+from six import with_metaclass
 
 from .moderator import GenericModerator
 from .register import ModerationManager
