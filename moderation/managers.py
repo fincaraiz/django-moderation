@@ -45,7 +45,7 @@ class ModerationObjectsManager(Manager):
         only_ready = {
             '_relation_object__state': MODERATION_READY_STATE,
         }
-        return queryset.filter(Q(**only_no_relation_objects) | Q(**only_ready))
+        return queryset # .filter(Q(**only_no_relation_objects) | Q(**only_ready))
 
     def exclude_objs_by_visibility_col(self, query_set):
         return query_set.exclude(**{self.moderator.visibility_column: False})
