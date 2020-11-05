@@ -187,10 +187,8 @@ class ModeratedObject(models.Model):
             old_visible = getattr(base_object,
                                   self.moderator.visibility_column)
 
-            if new_status == MODERATION_STATUS_APPROVED:
+            if new_status == MODERATION_STATUS_APPROVED or new_status == MODERATION_STATUS_REJECTED:
                 new_visible = True
-            elif new_status == MODERATION_STATUS_REJECTED:
-                new_visible = False
             else:  # MODERATION_STATUS_PENDING
                 new_visible = self.moderator.visible_until_rejected
 
