@@ -46,7 +46,6 @@ class GenericModerator:
 
     def __init__(self, model_class):
         self.model_class = model_class
-        self._validate_options()
         self.base_managers = self._get_base_managers()
 
         moderated_fields = getattr(model_class, 'moderated_fields', None)
