@@ -183,20 +183,6 @@ class ModeratedObject(models.Model):
         self.reason = reason
         self.save()
 
-        if self.moderator.visibility_column:
-            old_visible = getattr(base_object,
-                                  self.moderator.visibility_column)
-
-            if new_status == MODERATION_STATUS_APPROVED or new_status == MODERATION_STATUS_REJECTED:
-                new_visible = True
-            else:  # MODERATION_STATUS_PENDING
-                new_visible = self.moderator.visible_until_rejected
-
-            if new_visible != old_visible:
-                setattr(base_object, self.moderator.visibility_column,
-                        new_visible)
-                base_object_force_save = True
-
         if base_object_force_save:
             # avoid triggering pre/post_save_handler
             with transaction.atomic(using=None, savepoint=False):

@@ -50,17 +50,4 @@ class ModeratedObjectQuerySet(QuerySet):
 
         self.update(update_kwargs)
 
-        if mod.visibility_column:
-            if new_status == MODERATION_STATUS_APPROVED:
-                new_visible = True
-            elif new_status == MODERATION_STATUS_REJECTED:
-                new_visible = False
-            else:  # MODERATION_STATUS_PENDING
-                new_visible = mod.visibile_until_rejected
-
-            cls.objects.filter(
-                id__in=self.filter(content_type=ct)
-                           .values_list('object_id', flat=True))\
-               .update(**{mod.visibility_column: new_visible})
-
         mod.inform_users(self.exclude(changed_by=None).select_related('changed_by__email'))

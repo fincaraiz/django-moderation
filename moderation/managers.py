@@ -53,9 +53,6 @@ class ModerationObjectsManager(Manager):
     def get_queryset(self):
         query_set = super().get_queryset()
 
-        if self.moderator.visibility_column:
-            return self.exclude_objs_by_visibility_col(query_set)
-
         return self.filter_moderated_objects(query_set)
 
     @property
