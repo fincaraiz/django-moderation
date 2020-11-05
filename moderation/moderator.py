@@ -234,21 +234,3 @@ class GenericModerator:
             base_manager = Manager
 
         return base_manager
-
-    def _validate_options(self):
-        if self.visibility_column:
-            try:  # Django 1.10+
-                field_type = type(self.model_class._meta.get_field(
-                    self.visibility_column))
-            except AttributeError:
-                field_type = type(self.model_class._meta.get_field_by_name(
-                    self.visibility_column)[0])
-
-            if field_type != BooleanField:
-                msg = "visibility_column field: %s on model %s should " \
-                      "be BooleanField type but is %s"
-                msg %= (
-                    self.moderator.visibility_column,
-                    self.changed_object.__class__,
-                    field_type)
-                raise AttributeError(msg)
